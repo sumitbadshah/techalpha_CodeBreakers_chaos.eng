@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket – Savings Goal Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1 class="logo"><span class="logo-mark">◎</span>Pocket</h1>
+        <p class="tagline">Set your goals, split your budget, and see the exact month you get there.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ============ LEFT PANEL: CONTROLS ============ -->
+    <aside class="panel">
+
+      <!-- Monthly budget -->
+      <section class="card">
+        <h2>Monthly budget</h2>
+        <p class="sub">One pool of money, shared by all your goals.</p>
+
+        <div class="money-input">
+          <span>₹</span>
+          <input type="number" id="monthlySaving" min="0" step="any" placeholder="0" inputmode="decimal" aria-label="Monthly budget in rupees">
+        </div>
+        <input type="range" id="budgetSlider" min="0" max="200000" step="500" value="0" aria-label="Monthly budget slider">
+        <div class="range-ends"><span>₹0</span><span>₹2,00,000</span></div>
+
+        <p id="savingMessage" class="message warning" hidden></p>
+      </section>
+
+      <!-- Distribution -->
+      <section class="card">
+        <h2>How to split it</h2>
+
+        <div class="segmented" id="modeControl">
+          <button type="button" data-mode="split" class="active">Priority split</button>
+          <button type="button" data-mode="focus">Focus first</button>
+          <button type="button" data-mode="equal">Equal split</button>
+        </div>
+        <p id="modeHint" class="sub"></p>
+
+        <div id="shareControl" class="share-control">
+          <label for="shareSlider">Top priority gets <b id="shareValue">50%</b></label>
+          <input type="range" id="shareSlider" min="50" max="90" step="5" value="50">
+        </div>
+
+        <div id="splitBar" class="split-bar" aria-hidden="true"></div>
+        <ul id="splitLegend" class="split-legend"></ul>
+
+        <label class="switch-row">
+          <input type="checkbox" id="interestToggle" checked>
+          <span>Include 6% yearly interest <small>(0.5% a month)</small></span>
+        </label>
+      </section>
+
+      <!-- Add goal -->
+      <section class="card">
+        <h2>Add a goal</h2>
+
+        <div class="field">
+          <label for="goalName">What do you want to buy?</label>
+          <input type="text" id="goalName" placeholder="e.g. iPhone 15, MacBook, Royal Enfield" maxlength="40">
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="goalPrice">Price (₹)</label>
+            <input type="number" id="goalPrice" min="0" step="any" placeholder="70000" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="goalSaved">Already saved (₹)</label>
+            <input type="number" id="goalSaved" min="0" step="any" placeholder="0" inputmode="decimal">
+          </div>
+        </div>
+
+        <button type="button" id="addGoalBtn" class="btn-primary">Add goal</button>
+        <p id="formError" class="message error" hidden></p>
+      </section>
+    </aside>
+
+    <!-- ============ RIGHT: RESULTS ============ -->
+    <section class="content">
+
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-label">Total needed</span>
+          <span class="stat-value" id="sumTotal">₹0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Saved so far</span>
+          <span class="stat-value" id="sumSaved">₹0</span>
+          <div class="mini-track"><div class="mini-fill" id="sumBar"></div></div>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Monthly budget</span>
+          <span class="stat-value" id="sumBudget">₹0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">All goals done by</span>
+          <span class="stat-value" id="sumDate">–</span>
+          <span class="stat-sub" id="sumDateSub"></span>
+        </div>
+      </div>
+
+      <div class="goals-head">
+        <h2>Your goals <span class="count" id="goalCount">0</span></h2>
+        <div class="goals-tools">
+          <button type="button" id="demoBtn" class="btn-ghost">Load demo data</button>
+          <button type="button" id="clearBtn" class="btn-ghost">Clear all</button>
+        </div>
+      </div>
+
+      <div id="emptyState" class="empty">
+        <p class="empty-title">No goals yet</p>
+        <p>Add a phone, laptop or bike on the left, or try the demo data.</p>
+      </div>
+
+      <!-- Goal cards are rendered here by script.js -->
+      <div id="goalList"></div>
+    </section>
+
+  </main>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
